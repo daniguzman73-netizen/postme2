@@ -190,6 +190,7 @@ export default function PostMe(){
   const [error,setError]=useState("");
   const [copied,setCopied]=useState(false);
   const [showTerms,setShowTerms]=useState(false);
+  const [showPrivacy,setShowPrivacy]=useState(false);
   const resultRef=useRef();
 
   const hasContent=state.content.trim().length>0;
@@ -333,14 +334,16 @@ export default function PostMe(){
         </div>
       </main>
 
-      <footer style={{borderTop:`1px solid ${T.border}`,padding:"14px 16px",textAlign:"center"}}>
+      <footer style={{borderTop:`1px solid ${T.border}`,padding:"14px 16px",textAlign:"center",display:"flex",justifyContent:"center",gap:16}}>
         <button onClick={()=>setShowTerms(true)} style={{background:"none",border:"none",color:T.muted,fontSize:12,cursor:"pointer",fontFamily:"inherit",textDecoration:"underline"}}>Terms & Conditions</button>
+        <button onClick={()=>setShowPrivacy(true)} style={{background:"none",border:"none",color:T.muted,fontSize:12,cursor:"pointer",fontFamily:"inherit",textDecoration:"underline"}}>Privacy Policy</button>
       </footer>
 
-      {showTerms&&(
-        <div onClick={()=>setShowTerms(false)} style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.4)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000,padding:16}}>
+      {(showTerms||showPrivacy)&&(
+        <div onClick={()=>{setShowTerms(false);setShowPrivacy(false);}} style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.4)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1000,padding:16}}>
           <div onClick={e=>e.stopPropagation()} style={{background:T.surface,borderRadius:16,maxWidth:600,width:"100%",maxHeight:"80vh",overflow:"auto",padding:"32px 36px",boxShadow:"0 8px 40px rgba(0,0,0,0.15)",position:"relative"}}>
-            <button onClick={()=>setShowTerms(false)} style={{position:"absolute",top:16,right:16,background:"none",border:"none",fontSize:20,cursor:"pointer",color:T.muted,fontFamily:"inherit",lineHeight:1}}>✕</button>
+            <button onClick={()=>{setShowTerms(false);setShowPrivacy(false);}} style={{position:"absolute",top:16,right:16,background:"none",border:"none",fontSize:20,cursor:"pointer",color:T.muted,fontFamily:"inherit",lineHeight:1}}>✕</button>
+            {showTerms&&<>
             <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,fontWeight:600,color:T.text,margin:"0 0 4px"}}>Terms & Conditions</h2>
             <p style={{fontSize:12,color:T.muted,margin:"0 0 20px"}}>Last updated: March 2026</p>
             <div style={{fontSize:14,color:T.text,lineHeight:1.7}}>
@@ -386,6 +389,33 @@ export default function PostMe(){
               <h3 style={{fontSize:14,fontWeight:700,margin:"20px 0 8px"}}>9. Changes to These Terms</h3>
               <p style={{margin:0}}>We may update these Terms from time to time. Continued use of PostMe after changes constitutes acceptance of the revised terms.</p>
             </div>
+            </>}
+            {showPrivacy&&<>
+            <h2 style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,fontWeight:600,color:T.text,margin:"0 0 4px"}}>Privacy Policy</h2>
+            <p style={{fontSize:12,color:T.muted,margin:"0 0 20px"}}>Last updated: March 2026</p>
+            <div style={{fontSize:14,color:T.text,lineHeight:1.7}}>
+              <p>At PostMe, your privacy matters. This policy explains what data we handle and how.</p>
+              <h3 style={{fontSize:14,fontWeight:700,margin:"20px 0 8px"}}>1. What We Collect</h3>
+              <p style={{margin:"0 0 4px"}}>PostMe does not collect, store, or sell your personal data.</p>
+              <p style={{margin:"0 0 4px"}}>The only information that passes through PostMe is:</p>
+              <ul style={{margin:"0 0 12px",paddingLeft:20}}>
+                <li>Content you input (company posts, URLs, or uploaded files)</li>
+                <li>Your preferences (platform choice, slider settings, personal take)</li>
+              </ul>
+              <p style={{margin:"0 0 12px"}}>This information is used solely to generate your social media post and is not retained after your session ends.</p>
+              <h3 style={{fontSize:14,fontWeight:700,margin:"20px 0 8px"}}>2. How Your Content Is Processed</h3>
+              <p style={{margin:"0 0 12px"}}>Content you enter is sent to Anthropic's API to generate your post. Anthropic may process this data in accordance with their own privacy policy, available at anthropic.com/privacy.</p>
+              <p style={{margin:"0 0 12px"}}>We recommend not entering confidential or sensitive information that isn't already public.</p>
+              <h3 style={{fontSize:14,fontWeight:700,margin:"20px 0 8px"}}>3. Cookies & Tracking</h3>
+              <p style={{margin:"0 0 12px"}}>PostMe does not use cookies, analytics trackers, or any third-party tracking tools.</p>
+              <h3 style={{fontSize:14,fontWeight:700,margin:"20px 0 8px"}}>4. Third-Party Platforms</h3>
+              <p style={{margin:"0 0 12px"}}>When you copy and post generated content to LinkedIn, X, Instagram, or any other platform, that platform's own privacy policy applies. PostMe has no control over and no visibility into what happens after you leave our tool.</p>
+              <h3 style={{fontSize:14,fontWeight:700,margin:"20px 0 8px"}}>5. Children's Privacy</h3>
+              <p style={{margin:"0 0 12px"}}>PostMe is intended for use by adults in a professional context and is not directed at children under 16.</p>
+              <h3 style={{fontSize:14,fontWeight:700,margin:"20px 0 8px"}}>6. Changes to This Policy</h3>
+              <p style={{margin:0}}>We may update this policy occasionally. Any changes will be reflected here with an updated date.</p>
+            </div>
+            </>}
           </div>
         </div>
       )}
